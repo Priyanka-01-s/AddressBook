@@ -126,12 +126,24 @@ class Address {
                 String email = scanner.nextLine();
 
                 contact.updateContact(address, city, state, zip, phone, email);
-                System.out.println("Contact updated successfully.");
+                System.out.println("Contact updated successfully\n.");
                 return;
 
             }
         }
         System.out.println("CONTACT NOT AVAILABLE");
+    }
+
+    public void deleteAddress(String firstName, String lastName){
+        for (Contact contact : contacts) {
+            if(contact.getFname().equalsIgnoreCase(firstName) && contact.getLname().equalsIgnoreCase(lastName)){
+                contacts.remove(contact);
+                System.out.println("Contact deleted successfully\n.");
+                return;
+            }else{
+                System.out.println("CONTACT NOT AVAILABLE");
+            }
+        }
     }
 }
 
@@ -148,15 +160,16 @@ public class addressBook {
             System.out.println("Choose an option:");
             System.out.println("1. Add a new contact");
             System.out.println("2. Edit an existing contact");
-            System.out.println("3. Display all contacts");
+            System.out.println("3. Delete a contact");
+            System.out.println("4. Display all contacts");
             System.out.println("0. Exit");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine(); 
 
             switch (choice) {
                 case 1:
-                    // Adding a new contact with user input
+                   
                     System.out.print("Enter first name: ");
                     String fname = scanner.nextLine();
 
@@ -181,18 +194,15 @@ public class addressBook {
                     System.out.print("Enter email: ");
                     String email = scanner.nextLine();
 
-                    // Create a new contact with user input
+                
                     Contact newContact = new Contact(fname, lname, addressStr, city, state, zip, phone, email);
-
-                    // Add the new contact to the address book
                     address.addAddress(newContact);
 
-                    // Displaying all contacts in the address book
                     address.display();
                     break;
 
                 case 2:
-                    // Editing an existing contact with user input
+                    
                     System.out.println("Editing an existing contact:");
 
                     System.out.print("Enter first name of the contact to edit: ");
@@ -201,20 +211,30 @@ public class addressBook {
                     System.out.print("Enter last name of the contact to edit: ");
                     String editLastName = scanner.nextLine();
 
-                    // Edit the existing contact
                     address.editAddress(editFirstName, editLastName, scanner);
 
-                    // Displaying all contacts after editing
-                    address.display();
+                    
                     break;
 
+                
+
                 case 3:
-                    // Displaying all contacts in the address book
+                    System.out.println("Deleting an existing contact:");
+
+                    System.out.print("Enter first name of the contact to edit: ");
+                    String delFName = scanner.nextLine();
+
+                    System.out.print("Enter last name of the contact to edit: ");
+                    String delLName = scanner.nextLine();
+
+                    address.deleteAddress(delFName, delLName);
+
+                case 4:
                     address.display();
                     break;
 
                 case 0:
-                    System.out.println("Exiting the program. Goodbye!");
+                    System.out.println("---------THANK YOU FOR USING ADDRESS BOOK---------");
                     break;
 
                 default:
