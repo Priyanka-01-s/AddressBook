@@ -57,6 +57,15 @@ class Contact {
         return email;
     }
 
+    public void updateContact(String address, String city, String state, String zip, String phone, String email) {
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phone = phone;
+        this.email = email;
+    }
+
     public String toString() {
         return String.format(
                 "NAME : %s %s\nADDRESS : %s\nCITY : %s\nSTATE :%s\nZIP : %s\nPHONE NUMBER : %s\nEMAIL : %s\n",
@@ -65,74 +74,161 @@ class Contact {
 
 }
 
-class Address{
+class Address {
 
     private ArrayList<Contact> contacts;
 
-    public Address(){
+    public Address() {
         contacts = new ArrayList<Contact>();
     }
 
-    public void addAddress(Contact contact){
+    public void addAddress(Contact contact) {
         contacts.add(contact);
         System.out.println("Contact added successfully");
-    
+
     }
-    
+
     public void display() {
-        if(contacts.isEmpty()){
+        if (contacts.isEmpty()) {
             System.out.println("No contacts in the address book");
-        }else{
+        } else {
             System.out.println("Address book updated\n");
-            for(Contact c : contacts){
+            for (Contact c : contacts) {
                 System.out.println(c);
                 System.out.println();
-            
+
+            }
         }
+
+    }
+
+    public void editAddress(String firstName, String lastName, Scanner scanner) {
+        for (Contact contact : contacts) {
+            if (contact.getFname().equalsIgnoreCase(firstName) && contact.getLname().equalsIgnoreCase(lastName)) {
+                System.out.println("Enter the updated details :");
+
+                System.out.print("Enter address: ");
+                String address = scanner.nextLine();
+
+                System.out.print("Enter city: ");
+                String city = scanner.nextLine();
+
+                System.out.print("Enter state: ");
+                String state = scanner.nextLine();
+
+                System.out.print("Enter zip: ");
+                String zip = scanner.nextLine();
+
+                System.out.print("Enter phone number: ");
+                String phone = scanner.nextLine();
+
+                System.out.print("Enter email: ");
+                String email = scanner.nextLine();
+
+                contact.updateContact(address, city, state, zip, phone, email);
+                System.out.println("Contact updated successfully.");
+                return;
+
+            }
         }
-        
-            
-        
+        System.out.println("CONTACT NOT AVAILABLE");
     }
 }
 
 public class addressBook {
     public static void main(String[] args) {
-        System.out.println("Welcome to Address Book Program");
+        System.out.println("-------WELCOME TO ADDRESS BOOK PROGRAM-------");
 
         Address address = new Address();
-
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter first name: ");
-        String fname = scanner.nextLine();
 
-        System.out.print("Enter last name: ");
-        String lname = scanner.nextLine();
+        int choice;
+        do {
+            System.out.println("Choose an option:");
+            System.out.println("1. Add a new contact");
+            System.out.println("2. Edit an existing contact");
+            System.out.println("3. Display all contacts");
+            System.out.println("0. Exit");
 
-        System.out.print("Enter address: ");
-        String addressStr = scanner.nextLine();
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
 
-        System.out.print("Enter city: ");
-        String city = scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    // Adding a new contact with user input
+                    System.out.print("Enter first name: ");
+                    String fname = scanner.nextLine();
 
-        System.out.print("Enter state: ");
-        String state = scanner.nextLine();
+                    System.out.print("Enter last name: ");
+                    String lname = scanner.nextLine();
 
-        System.out.print("Enter zip: ");
-        String zip = scanner.nextLine();
+                    System.out.print("Enter address: ");
+                    String addressStr = scanner.nextLine();
 
-        System.out.print("Enter phone number: ");
-        String phone = scanner.nextLine();
+                    System.out.print("Enter city: ");
+                    String city = scanner.nextLine();
 
-        System.out.print("Enter email: ");
-        String email = scanner.nextLine();
+                    System.out.print("Enter state: ");
+                    String state = scanner.nextLine();
 
-        // Contact contact1 = new Contact("Priyanka", "Sengupta", "sector 78", "Noida", "UP", "201307", "891343189",
-        //         "abc@gmail.com");
+                    System.out.print("Enter zip: ");
+                    String zip = scanner.nextLine();
 
-        Contact newContact = new  Contact(fname, lname, addressStr, city, state, zip, phone, email);
-        address.addAddress(newContact);
-        address.display();
+                    System.out.print("Enter phone number: ");
+                    String phone = scanner.nextLine();
+
+                    System.out.print("Enter email: ");
+                    String email = scanner.nextLine();
+
+                    // Create a new contact with user input
+                    Contact newContact = new Contact(fname, lname, addressStr, city, state, zip, phone, email);
+
+                    // Add the new contact to the address book
+                    address.addAddress(newContact);
+
+                    // Displaying all contacts in the address book
+                    address.display();
+                    break;
+
+                case 2:
+                    // Editing an existing contact with user input
+                    System.out.println("Editing an existing contact:");
+
+                    System.out.print("Enter first name of the contact to edit: ");
+                    String editFirstName = scanner.nextLine();
+
+                    System.out.print("Enter last name of the contact to edit: ");
+                    String editLastName = scanner.nextLine();
+
+                    // Edit the existing contact
+                    address.editAddress(editFirstName, editLastName, scanner);
+
+                    // Displaying all contacts after editing
+                    address.display();
+                    break;
+
+                case 3:
+                    // Displaying all contacts in the address book
+                    address.display();
+                    break;
+
+                case 0:
+                    System.out.println("Exiting the program. Goodbye!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        } while (choice != 0);
+
+        scanner.close();
+
+        
+        // Contact contact1 = new Contact("Priyanka", "Sengupta", "sector 78", "Noida",
+        // "UP", "201307", "891343189",
+        // "abc@gmail.com");
+
+        
     }
 }
