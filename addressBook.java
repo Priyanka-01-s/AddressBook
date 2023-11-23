@@ -1,5 +1,8 @@
 package Assgn5_address;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 class Contact {
     private String fname;
     private String lname;
@@ -63,10 +66,32 @@ class Contact {
 }
 
 class Address{
+
+    private ArrayList<Contact> contacts;
+
+    public Address(){
+        contacts = new ArrayList<Contact>();
+    }
+
+    public void addAddress(Contact contact){
+        contacts.add(contact);
+        System.out.println("Contact added successfully");
     
-    public void display(Contact contact) {
+    }
+    
+    public void display() {
+        if(contacts.isEmpty()){
+            System.out.println("No contacts in the address book");
+        }else{
+            System.out.println("Address book updated\n");
+            for(Contact c : contacts){
+                System.out.println(c);
+                System.out.println();
+            
+        }
+        }
         
-            System.out.println(contact);
+            
         
     }
 }
@@ -77,8 +102,37 @@ public class addressBook {
 
         Address address = new Address();
 
-        Contact contact1 = new Contact("Priyanka", "Sengupta", "sector 78", "Noida", "UP", "201307", "891343189",
-                "abc@gmail.com");
-        address.display(contact1);
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter first name: ");
+        String fname = scanner.nextLine();
+
+        System.out.print("Enter last name: ");
+        String lname = scanner.nextLine();
+
+        System.out.print("Enter address: ");
+        String addressStr = scanner.nextLine();
+
+        System.out.print("Enter city: ");
+        String city = scanner.nextLine();
+
+        System.out.print("Enter state: ");
+        String state = scanner.nextLine();
+
+        System.out.print("Enter zip: ");
+        String zip = scanner.nextLine();
+
+        System.out.print("Enter phone number: ");
+        String phone = scanner.nextLine();
+
+        System.out.print("Enter email: ");
+        String email = scanner.nextLine();
+
+        // Contact contact1 = new Contact("Priyanka", "Sengupta", "sector 78", "Noida", "UP", "201307", "891343189",
+        //         "abc@gmail.com");
+
+        Contact newContact = new  Contact(fname, lname, addressStr, city, state, zip, phone, email);
+        address.addAddress(newContact);
+        address.display();
     }
 }
